@@ -15,48 +15,33 @@ def printBoard(board):
 	print  board['low-L'] + '|' + board['low-M'] + '|' + board['low-R']
 
 #Function will do a user entry validation
-def validationForIncorrectInput(choice):
-	while choice not in theBoard.keys():
-		print 'Choice entered is incorrect, enter a choice as mentioned above'
-		choice = str(raw_input())
-	return choice
-def validationForSamePlaceInput(choice):
-	while theBoard[choice] != ' ':
-		print 'Make a differnt choice as the place is already taken'
-		choice = str(raw_input())
-		if choice not in theBoard.keys():
-			 choice = validationForIncorrectInput(choice)
-	return choice
+def isCorrectInput(choice):
+	if( choice not in theBoard.keys() ):
+		print "Enter correct input"
+		return False
+	return True
+
+def isPositionFree(choice):
+	if( theBoard[choice] != ' '):
+		print "Enter Correct position"
+		return False
+	return True
 
 #Function will make an entry for first player choice
-def firstPlayer():
-	print 'Hi '+ player1 + ' enter your choice as mentioned above'
+def player(player, playerMark):
+	print 'Hi ' + player + ' enter your choice as mentined above'
 	choice = str(raw_input())
-	#print choice
-	choice = validationForIncorrectInput(choice)
-#	print choice
-	choice = validationForSamePlaceInput(choice)
-	theBoard[choice] = '0'
+	while( not isCorrectInput(choice) or not  isPositionFree(choice) ):
+		choice = str(raw_input())
+
+	theBoard[choice] = playerMark
 	printBoard(theBoard)
-
-#Function will make an entry for second player choice
-def secondPlayer():
-	print 'Hi '+ player2 + ' enter your choice as mentioned above'
-        choice = str(raw_input())
-	print choice
-	choice = validationForIncorrectInput(choice)
-	choice = validationForSamePlaceInput(choice)
-        theBoard[choice] = 'X'
-        printBoard(theBoard)
-
 
 print 'This is a tic tact toe game, so lets begin'
 print 'Enter the name of first player'
-player1 = str(raw_input())
-player1 = player1.lower()
+player1 = str(raw_input()).lower()
 print 'Enter the name of second player'
-player2 = str(raw_input())
-player2 = player2.lower()
+player2 = str(raw_input()).lower()
 print 'Totl choices are '
 for keys in theBoard:
 	print keys
@@ -64,7 +49,8 @@ for keys in theBoard:
 printBoard(theBoard)
 for i in range (1,10):
 	if i%2 != 0 :
-		firstPlayer()
+		player(player1, '0')
 	else:
-		secondPlayer()
+		player(player2, 'X')
+
 #printBoard(theBoard)
